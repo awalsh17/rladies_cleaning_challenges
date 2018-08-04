@@ -22,7 +22,7 @@ df <- read.csv(data_link)
 
 ```{r load_packages}
 # Do you want to load some packages here? Maybe tidyverse? 
-# Here are the packages I loaded to do this! You made need more or different ones
+# Here are the packages I loaded to complete the challenges! You made need more or different ones.
 
 library(tidyverse)
 library(stringr)
@@ -43,9 +43,13 @@ The first step is to inspect the data. Use 2 or three commands to look at things
 
 # Challenge two
 
-There is some missing data. Also some data has been converted to factors when it should be character.
+There is some missing data - blank values that we would like to be represented as NA in our dataset.
 
-Let's re-import the data with read.csv() and some options.
+
+Also some data has been converted to factors when it should be character.
+
+
+Let's re-import the data with read.csv() with different options (or use a different function). We want the variables like NEIGHBORHOOD andd ADDRESS to be class `r character`. The variable ADDRESS_NOTES should have 38 NA's.
 
 ```{r reload_data}
 # Fill in the options - add stringsAsFactors, na.strings
@@ -59,15 +63,20 @@ df <- read.csv(data_link) # add here
 Let's clean up the NEIGHBORHOOD! Use all your favorite commands to look at the values in NEIGHBORHOOD and clean them up. There are some entries with an extra space. There is some inconsistent capitalization.
 
 
+For example, "Center City", "Center city", and "Center City " are all different.
+
+
 ```{r clean_neighborhood}
 # Your code here
 ```
 
 # Challenge four
 
-There are 48 values in the MONTHS variable. If you want to plot the number of farmer's markets by month, how will you do it?
+There are 48 values in the MONTHS variable. It looks like this variable contains information about the dates the farmer's market is open (e.g. "May - October").
 
-Tip: Clean up the MONTHS variable and then add some new variables 
+If you want to plot the number of farmer's markets that are open by month, how will you do it?
+
+Tip: Clean up the MONTHS variable and create some new variables. I also decided to create a new data frame that summarized the number of open markets by month.
 
 ```{r clean_months}
 # Add code to process data here
@@ -84,9 +93,10 @@ Tip: Clean up the MONTHS variable and then add some new variables
 
 # Extra challenges
 
-Let's combine this data with another dataset? maybe something from opendataphilly?
-What if you were asked to plot the markets by zip code? or by day of week?
-What if you wanted to plot the markets on a map using the coordinates provided in X, Y?
+Let's combine this data with another dataset? maybe something from opendataphilly?  
+What if you were asked to plot the markets by zip code? or by day of week?  
+What if you wanted to plot the markets on a map using the coordinates provided in X, Y?  
+
 
 # Bonus data reshape challenge
 
@@ -108,7 +118,19 @@ The data is 10165 rows and 108 columns. Let's filter to just keep Philadelphia d
 zillow_wide <- filter(zillow_wide, City == "Philadelphia")
 ```
 
-This data is wide - there are columns for every month with home prices. Instead, we want to have one column with the prices and another with the month and year. How can we convert from wide to long?
+This data is wide - there are columns for every month with home prices (e.g. "X2018.01" and "2016.08"). Instead, we want to have one column with the prices and another with the month and year. How can we convert from wide to long?
+
+This is roughly what I want `r zillow_long` to look like:
+```{r dummy_df}
+fake_zillow_long <- data_frame(RegionName = c(19143, 19143, 19143, 19143, 19143),
+                               City = c("Philadelphia","Philadelphia","Philadelphia","Philadelphia","Philadelphia"),
+                               year = c(2010,2010,2010,2010,2010),
+                               month = c(1,2,3,4,5),
+                               price = c(79450, 77000, 83500, 79450, 79900))
+  
+fake_zillow_long
+```
+
 
 ```{r reshape_zillow}
 # Create a new dataframe, zillow_long, that contains reshaped data
